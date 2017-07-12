@@ -1,0 +1,192 @@
+﻿Notas verano de la ciencia 2017
+
+
+En esta memoria se encuentra la mayoría del trabajo realizado durante ésta estancia, aquí les dejamos algunas indicaciones
+que les pueden ser útiles a quien
+ quiera que trabaje aquí proximamente.
+
+
+
+Básicamente lo que hacen los programas es mediante un código en python 3.4 se comunica el Raspberry con la Kinect para
+obtener las imágenes de profundidad y
+ la normal para con base en ésta información se obtenga una distancia a algún objeto
+y el raspberry envie una señal de si es peligroso o no seguír avanzando. 
+A su vez se trabajaron funciones de varias librerias
+para la modificación de imágenes que resulten de utilidad, la presentación de éstas, etc.
+
+  
+
+Para accionar el programa tienen que dirigirse a la carpeta donde éste se encuentra, para ésto se tiene que ir al símbolo
+de sistema (terminal) (ícono en la parte de
+ arriba negro y azul) y poner los siguientes comandos de linux:
+
+
+cd /home/pi/libfreenect/wrappers/python      -Le indica la carpeta donde se encuentre
+
+freenect-glview                              -Prueba que el kinect funcione correctamente
+
+python3 Sensor.py                            -Acciona el programa, importante usar python3 y no solo python, dado que python 
+
+indica que se use python 2.7  
+
+
+Éste programa se encuentra además de en la carpeta dicha en la carpeta "Copias-Imagenes" donde se encuentran a su vez otros
+programas que se hicieron como apoyo al 
+principal, para accionar éstos programas sin embargo tendrían que ir a la carpeta
+cd /home/pi/libfreenect/wrappers/python dado que ahí se encuentran las librerías 
+freenect (accionada con cython, ya instalado)
+y cv2.so que solo funciona con python3:
+
+
+
+Contornos.py: Prueba de como se usan los contornos con una imagen.
+
+Dibujotexto.py: Autoexplicativo.
+
+FIltrosVarios.py: Aplica filtros a una imagen y hace un arreglo de las imagenes filtradas en una ventana, se puede guardar
+esta imagen. 
+Usa la librería matplotlib que al parecer trabaja en python2, por lo que no muestra la imagen con los filtros
+pero igual se puede guardar.
+
+Kinect.py: Primer intento del programa principal.
+
+loops.py: Manejo de ciclo for.
+
+modificar.py : Aplicado de filtro a imagen.
+
+pruebaled.py: Se le aplica una señal PWM a un led conectado al pin 12.
+
+Sensor.py: Programa principal, ya documentado, procurar no realizar muchas instrucciones de las comentadas a la vez,
+dado que ocupan considerable procesamiento.
+
+
+
+Las librerías utilizadas fueron: 
+
+
+Numpy : Librería para arreglos multidimensionales.
+
+OpenCV (cv2) : Para el procesamiento de imágenes, trabaja las imágenes obtenidas como arreglos numpy, solo funciona para python3
+
+pero se puede descargar tambièn para python 2.
+
+libfreenect (freenect): Para la comunicación con la kinect, obtención de datos, imágenes, etc. Revisar freenect.pyx (código interpretado con cython)
+
+RPi.GPIO: para el manejo de los pines de la raspberry.
+
+
+
+Aunque otras útiles serían: 
+matplotlib: Para una mejor presentación de imágenes, tratar de buscar la manera de que trabaje bien con python3
+time, math: propias del sistema, autoexplicativas
+
+MavProxy, MavLink: Librerías/Programas para la comunicación  con el dron, hasta donde encontramos solo trabajan con python2
+
+Arduino: No una librería, pero se detecta el dron como un arducopter 3.2.1 y arduino mega 2560, resulta útil para ver los datos
+de comunicación y todo eso.
+
+
+
+Ahora escribiré las cosas que recuerde.......
+
+
+
+- EL Kinect trabaja bien a 11.1 volts, a menos no lo detecta la raspberry.
+
+- EL algoritmo de distancia marca 0 metros si se apunta donde se mida a una zona con mucha luz, de tal manera que ésto se
+puede utilizar para detectar objetos tales 
+como ventanas y làmparas combinado con la detección de contornos.
+
+- Si llegan a volver a instalar los programas de los links que les dejamos, haganlo al pie de la letra y se ahorraran mucho sufrimiento
+
+- EL teclado cambia de repente entre inglés y españo, no sabemos el porque.
+
+- Para usar el navegador tienen que configurar bien la fecha y hora.
+
+- La memoria de 8 GB no les va a alcanzar, el sistema operativo pesa 4 y OpenCV como 3, procuren usar de 16 para arriba.
+
+- El sistema operativo es Raspbian Jessie, tratamos también Ubuntu pero no funcinó tan bien.
+
+- Intenten utilizar seguido la terminal (símbolo de sistema) manejando los comandos de linux, resulta bastante útil
+
+- Para descargar e instalar programas y que los busque el mismo sistema pueden usar:
+sudo pip install "nombre aplicación/programa" (sin comillas) y para que 
+instale específico de python3 se le agregaba 
+python3 -m en alguna parte de la linea, pero no recordamos donde.
+
+-En cv2 hay una funciòn que regresa un valor numérico según la tecla que se presione, algunos valores son éstos (letras en minúsculas):
+
+*De 0 a 9: 48-57
+
+*intro: 10
+
+*esc: 27
+
+*Espacio: 32
+
+*q : 113
+
+*w: 119
+
+*e: 101
+
+*a: 97
+
+*s: 115
+
+*d: 100
+
+*z: 122
+
+*x: 120
+
+*c: 99
+
+- Cuando usen alguna función que tenga que ver con imagenes de profundidad en la terminal aparecerán números hexadecimales
+extraños, creemos que hay información 
+útil ahí pero no supimos como manejarlos.
+
+
+
+Links útiles: 
+
+- Para los comandos de linux en la terminal : https://www.raspberrypi.org/documentation/linux/usage/commands.md
+
+- Para instalar (en caso de ser necesario) Numpy, OpenCV y Python2/3 paso a paso, útil tambien si quieren ver como 
+se escribe en la terminal:
+ http://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/
+
+- Para intalación de libfreenect (en caso de ser necesario) y checar funciones:
+
+https://naman5.wordpress.com/2014/06/24/experimenting-with-kinect-using-opencv-python-and-open-kinect-libfreenect/
+
+también checar el github de OpenKinect
+
+- Para el uso de funciones de OpenCV y algunas de matplotlib(MUY ÚTIL):
+http://docs.opencv.org/3.1.0/d6/d00/tutorial_py_root.html
+
+- Para el manejo de numpy array: https://docs.scipy.org/doc/numpy/reference/arrays.ndarray.html
+
+- Github del proyecto (manejado por betsa): http://github.com/b3tz4/kinect-raspberry-pi/
+
+
+Pasos tentativos siguientes:
+- El programa ya detecta contornos y una distancia, asì que sería útil desarrollar un algoritmo que seleccione el contorno
+especìfico y determine la distancia al 
+objeto que marque dicho contorno.
+
+- Buscar la manera de comunicarse con el dron, ya sea a travez de código python, otro código en arduino, algùn programa especializado
+ por las terminales del 
+Raspberry.
+
+- Se hizo paralelamente un experimento de caracterización de motores que mide el ciclo de trabajo al que funcionan
+y voltaje segùn las revoluciones por minuto 
+que se midan: Esto se hizo con la ayuda de dos arduinos, un led infrarrojo y un
+fototransistor pero no se terminó por completo.
+
+
+
+Diviértanse, mucho éxito, no mueran con los drones, coman bien, lávense los dientes.
+
+
+Les mandamos saludos: Emmanuel, Gabriela, Betsabé.
